@@ -48,7 +48,7 @@ Option.AnglePrecision = 0;   % full precision
 Option.WeightedContrast = 0;
 Option.Display = 1;
 
-DCF = OptimalDCF_3DRadial( AngleInfo, Option );
+DCF = gDCF_3DRadial( AngleInfo, Option );
 size(DCF)
 
 figure(1); imagesc( DCF(:,:,1), [0 1] ); colormap jet
