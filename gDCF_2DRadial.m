@@ -1,5 +1,5 @@
 
-function [DCF] = OptimalDCF_2DRadial( AngleInfo_input, Option ) 
+function [DCF] = gDCF_2DRadial( AngleInfo_input, Option ) 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %
 % % Written by KyungPyo Hong
