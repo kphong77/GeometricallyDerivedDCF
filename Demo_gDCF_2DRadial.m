@@ -46,7 +46,7 @@ else
     end
 end
 
-DCF = OptimalDCF_2DRadial( AngleInfo, Option );
+DCF = gDCF_2DRadial( AngleInfo, Option );
 
 figure(1); imagesc( DCF(:,:,1), [0 1] ); colormap jet
 axis image
