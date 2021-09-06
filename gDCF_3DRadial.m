@@ -1,5 +1,5 @@
 
-function [DCF_3D] = OptimalDCF_3DRadial( AngleInfo_input, Option ) 
+function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option ) 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %
 % % Written by KyungPyo Hong 
