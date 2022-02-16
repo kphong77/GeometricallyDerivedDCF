@@ -25,6 +25,9 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
 % %    - Pb = (x2,y2,z2)
 % %    - angular distance = atan2( norm(cross(Pa,Pb)), dot(Pa,Pb) )
 % %
+% % Publication: "Accelerating compressed sensing reconstruction of subsampled radial k-space data using geometrically-derived density compensation"
+% % Hong K, et al. Physics in Medicine & Biology, Volume 66, Number 21.
+% %  - Citation: KyungPyo Hong et al 2021 Phys. Med. Biol. 66 21NT01
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Unit metric
