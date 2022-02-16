@@ -14,6 +14,9 @@ function [DCF] = gDCF_2DRadial( AngleInfo_input, Option )
 % %   - Option.WeightedContrast: weight-adjust for various image contrasts 
 % %                              (Song HK, et al. Magn Reson Med. 2000 Dec;44(6):825-32.) 
 % %
+% % Publication: "Accelerating compressed sensing reconstruction of subsampled radial k-space data using geometrically-derived density compensation"
+% % Hong K, et al. Physics in Medicine & Biology, Volume 66, Number 21.
+% %  - Citation: KyungPyo Hong et al 2021 Phys. Med. Biol. 66 21NT01
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Unit metric
