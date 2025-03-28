@@ -120,7 +120,7 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                         Overlap = (UnitMetric - (1-cos(AngularDistance/2)))/UnitMetric;
                 end
                 [tmp_ind, ~] = find( Overlap <= 0 );
-                Overlap( tmp_ind ) = 0;
+                Overlap( tmp_ind ) = [];
                 SumOfOverlaps(proj_loc) = SumOfOverlaps(proj_loc) + sum(Overlap.^2);
             end
             tmp_DCF_3D( radius, : ) = 1./SumOfOverlaps;
