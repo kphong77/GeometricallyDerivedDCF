@@ -53,7 +53,7 @@ Option.WeightedContrast = 0;
 Option.Display = 1;
 
 gDCF = gDCF_3DRadial( AngleInfo, Option );
-size(DCF)
+size(gDCF)
 
 figure(1); imagesc( gDCF(:,:,1), [0 1] ); colormap jet
 axis image
