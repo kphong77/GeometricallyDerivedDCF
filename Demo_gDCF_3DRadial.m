@@ -6,7 +6,11 @@ Nsamples = 64
 % double sampling in MRI (actual sampling in a radial projection)
 NM = Nsamples*2     
 % the number of radial projections
-Nproj = 100            
+if 1
+    Nproj = 100            
+else
+    Nproj = round( (4*pi*(Nsamples)^2)/2 ); % Nyquist sampling 
+end
 % the number of repeats
 Nrepeat = 1        
 % KWIC function
