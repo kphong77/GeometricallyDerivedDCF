@@ -106,10 +106,21 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                     AngularDistance = round( AngularDistance * CalcPrecision )/CalcPrecision;
                 end
 
-                Overlap = (UnitMetric - 2*pi*(radius^2)*(1-cos(AngularDistance)))/UnitMetric;
+                % update UnitMetric
+                switch 2
+                    case 1
+                        % Surface area = 2*pi*radius*H, where H = radius*(1-cos(theta/2))
+                        %   and theta = UnitDistance/radius <-- radius*theta = UnitDistance
+                        UnitMetric = (2*pi*radius)*(radius*(1 - cos(UnitDistance/radius/2)));
+                        Overlap = (UnitMetric - (2*pi*radius)*(radius*(1-cos(AngularDistance/2))) )/UnitMetric;
+                    case 2
+                        % for simple calculation
+                        UnitMetric = (1 - cos(UnitDistance/radius/2));
+                        Overlap = (UnitMetric - (1-cos(AngularDistance/2)))/UnitMetric;
+                end
                 [tmp_ind, ~] = find( Overlap <= 0 );
                 Overlap( tmp_ind ) = 0;
-                SumOfOverlaps(proj_loc) = SumOfOverlaps(proj_loc) + sum(Overlap);
+                SumOfOverlaps(proj_loc) = SumOfOverlaps(proj_loc) + sum(Overlap.^2);
             end
             tmp_DCF_3D( radius, : ) = 1./SumOfOverlaps;
         end
