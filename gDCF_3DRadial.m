@@ -102,7 +102,7 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                 
                 % % calculate an angular distance between two points on the surface at a given radius
                 dotAB = sum( AllVectors(proj_loc,:).*AllVectors(index_WC,:), 2 );
-                AngularDistance = atan2( sqrt( sum( cross( ones(length(index_WC),3).*AllVectors(proj_loc,:), AllVectors(index_WC,:) ).^2,2)), dotAB );
+                AngularDistance = abs( atan2( sqrt( sum( cross( ones(length(index_WC),3).*AllVectors(proj_loc,:), AllVectors(index_WC,:) ).^2,2)), dotAB ) );
                 if CalcPrecision > 1
                     AngularDistance = round( AngularDistance * CalcPrecision )/CalcPrecision;
                 end
