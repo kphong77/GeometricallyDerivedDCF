@@ -92,6 +92,8 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
             [ index_WC  tmp_ ] = find( tmp_WC(:) > 0 );
 
             SumOfOverlaps = zeros( 1, Nproj*2 );
+            Overlap = [];
+            UnitMetric = 0;
             for proj_loc = index_WC'
                 % % overlap for 3D radial: based on the surface area of sphere 
                 % %  - dA = Unit Metric = unit area = (unit distance)^2
@@ -100,8 +102,7 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                 
                 % % calculate an angular distance between two points on the surface at a given radius
                 dotAB = sum( AllVectors(proj_loc,:).*AllVectors(index_WC,:), 2 );
-                tmp_AngDist = atan2( sqrt( sum( cross( ones(length(index_WC),3).*AllVectors(proj_loc,:), AllVectors(index_WC,:) ).^2,2)), dotAB );
-                AngularDistance = abs( tmp_AngDist );
+                AngularDistance = atan2( sqrt( sum( cross( ones(length(index_WC),3).*AllVectors(proj_loc,:), AllVectors(index_WC,:) ).^2,2)), dotAB );
                 if CalcPrecision > 1
                     AngularDistance = round( AngularDistance * CalcPrecision )/CalcPrecision;
                 end
