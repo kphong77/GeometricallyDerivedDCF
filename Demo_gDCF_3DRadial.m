@@ -59,3 +59,10 @@ set(gca, 'fontsize', 30, 'fontweight', 'bold' )
 ylabel( 'Radius' )
 xlabel( 'Projection' )
 colorbar
+
+% comparison to Nyquist
+DCF_Nyquist = round( (abs((1:NM)-(NM/2+1)).^2)* (4*pi)/2 );
+
+figure(2)
+plot( DCF_Nyquist, 'k-' ); 
+hold on; plot( sum(DCF,2), 'r--' ); axis square; grid on
