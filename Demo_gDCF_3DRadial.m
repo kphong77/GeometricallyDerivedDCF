@@ -52,10 +52,10 @@ Option.AnglePrecision = 0;   % full precision
 Option.WeightedContrast = 0;
 Option.Display = 1;
 
-DCF = gDCF_3DRadial( AngleInfo, Option );
+gDCF = gDCF_3DRadial( AngleInfo, Option );
 size(DCF)
 
-figure(1); imagesc( DCF(:,:,1), [0 1] ); colormap jet
+figure(1); imagesc( gDCF(:,:,1), [0 1] ); colormap jet
 axis image
 yticks( [1  NM/2+1  NM] )
 yticklabels( { num2str(NM/2), '0', num2str(NM/2-1) } )
@@ -66,7 +66,6 @@ colorbar
 
 % comparison to Nyquist
 DCF_Nyquist = round( (abs((1:NM)-(NM/2+1)).^2)* (4*pi)/2 );
-
 figure(2)
 plot( DCF_Nyquist, 'k-' ); 
-hold on; plot( sum(DCF,2), 'r--' ); axis square; grid on
+hold on; plot( sum(gDCF,2), 'r--' ); axis square; grid on
