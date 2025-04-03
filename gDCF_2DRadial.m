@@ -91,21 +91,21 @@ function [DCF] = gDCF_2DRadial( AngleInfo_input, Option )
                 ang4 = min( ang1, ang2 );
                 tmp_calc(:,1) = abs( ang3 - ang4 );
                 tmp_calc(:,2) = abs( ang3 - (ang4+2*pi) );
-                tmp_sel = sort( tmp_calc, 2, 'ascend' );
+                tmp_sel       = sort( tmp_calc, 2, 'ascend' );
                 if CalcPrecision > 1
                     tmp_sel = round( tmp_sel*CalcPrecision )/CalcPrecision;
                 end
-                Overlap = (UnitMetric - radius*tmp_sel(:,1))/UnitMetric;
-                [tmp_ind, ~] = find( Overlap <= 0 );
-                Overlap( tmp_ind ) = 0;
+                Overlap                 = (UnitMetric - radius*tmp_sel(:,1))/UnitMetric;
+                [tmp_ind, ~]            = find( Overlap <= 0 );
+                Overlap( tmp_ind )      = [];
                 SumOfOverlaps(proj_loc) = SumOfOverlaps(proj_loc) + sum(Overlap);
             end
             tmp_DCF( radius, : ) = 1./SumOfOverlaps;
         end
-        DCF( NM/2:-1:2, :, TimeFrame ) = tmp_DCF(:,1:Nproj);
+        DCF( NM/2:-1:2, :, TimeFrame )  = tmp_DCF(:,1:Nproj);
         DCF( NM/2+2:end, :, TimeFrame ) = tmp_DCF(:,Nproj+1:end);
     end
     DCF( find( DCF == inf ) ) = 0;
-    DCF(1,:,:) = DCF(2,:,:);
-    DCF( find( DCF == 0 ) ) = eps;
+    DCF(1,:,:)                = DCF(2,:,:);
+    DCF( find( DCF == 0 ) )   = eps;
 end
