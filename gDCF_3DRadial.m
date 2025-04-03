@@ -75,25 +75,25 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
     
    
     DCF_3D = zeros( NM, Nproj, Nrep );
-    for TimeFrame = 1:Nrep
+    for TimeFrame = 1 : Nrep
         fprintf( 'TimeFrame = %3d\n', TimeFrame );
+
         [tmp_ index_proj ] =  find( WeightedContrast(NM/2+1,:,TimeFrame) > 0 ); 
         NumOfProj = length( index_proj );
         DCF_3D( NM/2+1, index_proj, TimeFrame ) = 1/NumOfProj;   % at radius = 0
-
         tmp_DCF_3D = zeros( NM/2-1, Nproj*2 );
-        parfor radius = 1:NM/2-1
+        parfor radius = 1 : NM/2-1
             fprintf( 'radius = %3d\n', radius )
+            
             VectorPos = squeeze(proj_grid(NM/2+1+radius,:,TimeFrame,:));
             VectorNeg = squeeze(proj_grid(NM/2+1-radius,:,TimeFrame,:));
             AllVectors = [VectorPos; VectorNeg];
-            
             tmp_WC = WeightedContrast( [NM/2+1-radius  NM/2+1+radius], :, TimeFrame )';
             [ index_WC  tmp_ ] = find( tmp_WC(:) > 0 );
 
             SumOfOverlaps = zeros( 1, Nproj*2 );
-            Overlap = [];
-            UnitMetric = 0;
+            Overlap       = [];
+            UnitMetric    = 0;
             for proj_loc = index_WC'
                 % % overlap for 3D radial: based on the surface area of sphere 
                 % %  - dA = Unit Metric = unit area = (unit distance)^2
@@ -101,7 +101,7 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                 % %       = 2*pi*(radius^2)*(1-cos(AngularDistanceBtwTwoPoints)) at the pole (r,0,0)
                 
                 % % calculate an angular distance between two points on the surface at a given radius
-                dotAB = sum( AllVectors(proj_loc,:).*AllVectors(index_WC,:), 2 );
+                dotAB           = sum( AllVectors(proj_loc,:).*AllVectors(index_WC,:), 2 );
                 AngularDistance = abs( atan2( sqrt( sum( cross( ones(length(index_WC),3).*AllVectors(proj_loc,:), AllVectors(index_WC,:) ).^2,2)), dotAB ) );
                 if CalcPrecision > 1
                     AngularDistance = round( AngularDistance * CalcPrecision )/CalcPrecision;
@@ -111,26 +111,26 @@ function [DCF_3D] = gDCF_3DRadial( AngleInfo_input, Option )
                 switch 2
                     case 1
                         % Surface area = 2*pi*radius*H, where H = radius*(1-cos(theta/2))
-                        %   and theta = UnitDistance/radius <-- radius*theta = UnitDistance
+                        %    and theta = UnitDistance/radius <-- radius*theta = UnitDistance
                         UnitMetric = (2*pi*radius)*(radius*(1 - cos(UnitDistance/radius/2)));
-                        Overlap = (UnitMetric - (2*pi*radius)*(radius*(1-cos(AngularDistance/2))) )/UnitMetric;
+                        Overlap    = (UnitMetric - (2*pi*radius)*(radius*(1-cos(AngularDistance/2))) )/UnitMetric;
                     case 2
                         % for simple calculation
                         UnitMetric = (1 - cos(UnitDistance/radius/2));
-                        Overlap = (UnitMetric - (1-cos(AngularDistance/2)))/UnitMetric;
+                        Overlap    = (UnitMetric - (1-cos(AngularDistance/2)))/UnitMetric;
                 end
-                [tmp_ind, ~] = find( Overlap <= 0 );
-                Overlap( tmp_ind ) = [];
+                [tmp_ind, ~]            = find( Overlap <= 0 );
+                Overlap( tmp_ind )      = [];
                 SumOfOverlaps(proj_loc) = SumOfOverlaps(proj_loc) + sum(Overlap.^2);
             end
-            tmp_DCF_3D( radius, : ) = 1./SumOfOverlaps;
+            tmp_DCF_3D( radius, : )     = 1./SumOfOverlaps;
         end
-        DCF_3D(NM/2:-1:2,:,TimeFrame) = tmp_DCF_3D(:,1:Nproj);
+        DCF_3D(NM/2:-1:2,:,TimeFrame)  = tmp_DCF_3D(:,1:Nproj);
         DCF_3D(NM/2+2:end,:,TimeFrame) = tmp_DCF_3D(:,Nproj+1:end);
     end
     DCF_3D( find( DCF_3D == inf ) ) = 0;
-    DCF_3D(1,:,:) = DCF_3D(2,:,:);
-    DCF_3D( find( DCF_3D == 0 ) ) = eps;
+    DCF_3D(1,:,:)                   = DCF_3D(2,:,:);
+    DCF_3D( find( DCF_3D == 0 ) )   = eps;
 end
 
 
